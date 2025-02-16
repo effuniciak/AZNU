@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:books="http://www.example.org/types" targetNamespace="http://www.example.org/books" xmlns:tns="http://www.example.org/books" elementFormDefault="qualified">
+	<import schemaLocation="types.xsd" namespace="http://www.example.org/types"/>
+	
+</schema>

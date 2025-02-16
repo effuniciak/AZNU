@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="windows-1250" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.example.org/types"
+            targetNamespace="http://www.example.org/types"
+            elementFormDefault="qualified">
+  <xsd:simpleType name="category">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="fantasy" />
+        <xsd:enumeration value="sci_fi" />
+        <xsd:enumeration value="horror" />
+        <xsd:enumeration value="romance" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="Author">
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="url" type="xsd:string"/>
+      <xsd:element name="id" type="xsd:int"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Book">
+    <xsd:sequence>
+      <xsd:element name="title" type="xsd:string"/>
+      <xsd:element name="author" type="Author"/>
+      <xsd:element name="category" type="category"/>
+      <xsd:element name="publication_year" type="xsd:date"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Exception">
+  	<xsd:sequence>
+   		<xsd:element name="code" type="xsd:int"/>
+   		<xsd:element name="text" type="xsd:string"/>
+   	</xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

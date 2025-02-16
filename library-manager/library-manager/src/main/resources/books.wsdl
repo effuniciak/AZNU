@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:tns="http://www.example.org/books/" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	name="books" 
+	targetNamespace="http://www.example.org/books/"
+	xmlns:books="http://www.example.org">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/">
+		<xsd:import schemaLocation="books.xsd" namespace="http://www.example.org"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="addNewBookRequestMsg">
+    <wsdl:part element="books:addNewBookRequest" name="payload"/>
+  </wsdl:message>
+    <wsdl:message name="addNewBookResponseMsg">
+    <wsdl:part element="books:addNewBookResponse" name="payload"/>
+  </wsdl:message>
+    <wsdl:message name="getBookRequestMsg">
+    <wsdl:part element="books:getBookRequest" name="payload"/>
+  </wsdl:message>
+    <wsdl:message name="getBookResponseMsg">
+    <wsdl:part element="books:getBookResponse" name="payload"/>
+  </wsdl:message>
+
+  <wsdl:message name="libraryManagerExceptionMsg">
+    <wsdl:part element="books:libraryManagerException" name="payload"/>
+  </wsdl:message>
+  
+  <wsdl:portType name="LibraryManager">
+    <wsdl:operation name="addNewBook">
+      <wsdl:input message="tns:addNewBookRequestMsg"/>
+      <wsdl:output message="tns:addNewBookResponseMsg"/>
+      <wsdl:fault message="tns:libraryManagerExceptionMsg" name="libraryManagerException"/>
+    </wsdl:operation>
+    <wsdl:operation name="getBook">
+      <wsdl:input message="tns:getBookRequestMsg"/>
+      <wsdl:output message="tns:getBookResponseMsg"/>
+      <wsdl:fault message="tns:libraryManagerExceptionMsg" name="libraryManagerException"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="LibraryManagerSOAP" type="tns:LibraryManager">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="addNewBook">
+      <soap:operation soapAction="http://www.example.org/books/addNewBook"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="libraryManagerException">
+      	<soap:fault name="libraryManagerException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBook">
+      <soap:operation soapAction="http://www.example.org/books/getBook"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="libraryManagerException">
+      	<soap:fault name="libraryManagerException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>    
+  </wsdl:binding>
+  <wsdl:service name="LibraryManagerService">
+    <wsdl:port binding="tns:LibraryManagerSOAP" name="LibraryManagerPort">
+      <soap:address location="http://www.example.org/books/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

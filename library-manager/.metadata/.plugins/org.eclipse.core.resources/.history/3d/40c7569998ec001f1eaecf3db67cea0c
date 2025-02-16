@@ -1,0 +1,24 @@
+package com.example.books;
+
+import org.example.AddNewBookRequest;
+import org.example.AddNewBookResponse;
+import org.example.GetBookRequest;
+import org.example.books.LibraryManager;
+import org.example.books.LibraryManagerExceptionMsg;
+import org.example.types.Book;
+
+public class LibraryManagerEndpoint implements LibraryManager {
+
+	@Override
+	public AddNewBookResponse addNewBook(AddNewBookRequest payload) throws LibraryManagerExceptionMsg {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Book getBook(GetBookRequest payload) throws LibraryManagerExceptionMsg {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

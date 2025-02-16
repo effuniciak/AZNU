@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:books_t="http://www.example.org/types" targetNamespace="http://www.example.org/books" xmlns:tns="http://www.example.org/books" elementFormDefault="qualified">
+	<import schemaLocation="types.xsd" namespace="http://www.example.org/types"/>
+	<element name="addNewBookRequest">
+		<complexType>
+			<sequence>
+				<element name="record" type="books_t:Book"/>
+			</sequence>
+		</complexType>
+	</element>
+</schema>
