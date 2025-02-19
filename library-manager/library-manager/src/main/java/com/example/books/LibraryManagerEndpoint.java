@@ -3,6 +3,7 @@ package com.example.books;
 import org.example.AddNewBookRequest;
 import org.example.AddNewBookResponse;
 import org.example.GetBookRequest;
+import org.example.GetBooksResponse;
 import org.example.books.LibraryManager;
 import org.example.books.LibraryManagerExceptionMsg;
 import org.example.types.Book;
@@ -55,4 +56,14 @@ public class LibraryManagerEndpoint implements LibraryManager {
 		return foundBook;
 	}
 
+	@Override
+	public GetBooksResponse getBooks(Object payload) throws LibraryManagerExceptionMsg {
+		GetBooksResponse response = new GetBooksResponse();
+		
+		for (Book book : books) {
+			response.getBook().add(book);
+		}
+
+		return response;
+	}
 }

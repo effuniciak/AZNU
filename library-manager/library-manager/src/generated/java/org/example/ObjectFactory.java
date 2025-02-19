@@ -27,6 +27,7 @@ import org.example.types.Exception;
 public class ObjectFactory {
 
     private static final QName _GetBookResponse_QNAME = new QName("http://www.example.org", "getBookResponse");
+    private static final QName _GetBooksRequest_QNAME = new QName("http://www.example.org", "getBooksRequest");
     private static final QName _LibraryManagerException_QNAME = new QName("http://www.example.org", "libraryManagerException");
 
     /**
@@ -67,6 +68,16 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetBooksResponse }
+     * 
+     * @return
+     *     the new instance of {@link GetBooksResponse }
+     */
+    public GetBooksResponse createGetBooksResponse() {
+        return new GetBooksResponse();
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Book }{@code >}
      * 
      * @param value
@@ -77,6 +88,19 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://www.example.org", name = "getBookResponse")
     public JAXBElement<Book> createGetBookResponse(Book value) {
         return new JAXBElement<>(_GetBookResponse_QNAME, Book.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link Object }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://www.example.org", name = "getBooksRequest")
+    public JAXBElement<Object> createGetBooksRequest(Object value) {
+        return new JAXBElement<>(_GetBooksRequest_QNAME, Object.class, null, value);
     }
 
     /**

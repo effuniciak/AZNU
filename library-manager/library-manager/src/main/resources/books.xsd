@@ -19,5 +19,13 @@
 		</complexType>
 	</element>
 	<element name="getBookResponse" type="books_t:Book"/>
+	<element name="getBooksRequest"/>
+	<element name="getBooksResponse">
+		<complexType>
+        <sequence>
+            <element name="Book" type="books_t:Book" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+		</complexType>
+	</element>
 	<element name="libraryManagerException" type="books_t:Exception"/>
 </schema>

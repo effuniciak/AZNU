@@ -15,16 +15,22 @@
   <wsdl:message name="addNewBookRequestMsg">
     <wsdl:part element="books:addNewBookRequest" name="payload"/>
   </wsdl:message>
-    <wsdl:message name="addNewBookResponseMsg">
+  <wsdl:message name="addNewBookResponseMsg">
     <wsdl:part element="books:addNewBookResponse" name="payload"/>
   </wsdl:message>
-    <wsdl:message name="getBookRequestMsg">
+  <wsdl:message name="getBookRequestMsg">
     <wsdl:part element="books:getBookRequest" name="payload"/>
   </wsdl:message>
-    <wsdl:message name="getBookResponseMsg">
+  <wsdl:message name="getBookResponseMsg">
     <wsdl:part element="books:getBookResponse" name="payload"/>
   </wsdl:message>
-
+  <wsdl:message name="getBooksRequestMsg">
+    <wsdl:part element="books:getBooksRequest" name="payload"/>
+  </wsdl:message>
+  <wsdl:message name="getBooksResponseMsg">
+    <wsdl:part element="books:getBooksResponse" name="payload"/>
+  </wsdl:message>
+  
   <wsdl:message name="libraryManagerExceptionMsg">
     <wsdl:part element="books:libraryManagerException" name="payload"/>
   </wsdl:message>
@@ -38,6 +44,11 @@
     <wsdl:operation name="getBook">
       <wsdl:input message="tns:getBookRequestMsg"/>
       <wsdl:output message="tns:getBookResponseMsg"/>
+      <wsdl:fault message="tns:libraryManagerExceptionMsg" name="libraryManagerException"/>
+    </wsdl:operation>
+    <wsdl:operation name="getBooks">
+      <wsdl:input message="tns:getBooksRequestMsg"/>
+      <wsdl:output message="tns:getBooksResponseMsg"/>
       <wsdl:fault message="tns:libraryManagerExceptionMsg" name="libraryManagerException"/>
     </wsdl:operation>
   </wsdl:portType>
@@ -57,6 +68,18 @@
     </wsdl:operation>
     <wsdl:operation name="getBook">
       <soap:operation soapAction="http://www.example.org/books/getBook"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="libraryManagerException">
+      	<soap:fault name="libraryManagerException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBooks">
+      <soap:operation soapAction="http://www.example.org/books/getBooks"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
