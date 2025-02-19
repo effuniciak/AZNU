@@ -28,6 +28,8 @@ public class ObjectFactory {
 
     private static final QName _GetLibraryListRequest_QNAME = new QName("http://www.example.org", "getLibraryListRequest");
     private static final QName _GetLibraryDetailsResponse_QNAME = new QName("http://www.example.org", "getLibraryDetailsResponse");
+    private static final QName _AddBookResponse_QNAME = new QName("http://www.example.org", "addBookResponse");
+    private static final QName _RemoveBookResponse_QNAME = new QName("http://www.example.org", "removeBookResponse");
     private static final QName _LibrariesDbException_QNAME = new QName("http://www.example.org", "librariesDbException");
 
     /**
@@ -58,6 +60,26 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link AddBookRequest }
+     * 
+     * @return
+     *     the new instance of {@link AddBookRequest }
+     */
+    public AddBookRequest createAddBookRequest() {
+        return new AddBookRequest();
+    }
+
+    /**
+     * Create an instance of {@link RemoveBookRequest }
+     * 
+     * @return
+     *     the new instance of {@link RemoveBookRequest }
+     */
+    public RemoveBookRequest createRemoveBookRequest() {
+        return new RemoveBookRequest();
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}
      * 
      * @param value
@@ -81,6 +103,32 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://www.example.org", name = "getLibraryDetailsResponse")
     public JAXBElement<Library> createGetLibraryDetailsResponse(Library value) {
         return new JAXBElement<>(_GetLibraryDetailsResponse_QNAME, Library.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link Object }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://www.example.org", name = "addBookResponse")
+    public JAXBElement<Object> createAddBookResponse(Object value) {
+        return new JAXBElement<>(_AddBookResponse_QNAME, Object.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link Object }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://www.example.org", name = "removeBookResponse")
+    public JAXBElement<Object> createRemoveBookResponse(Object value) {
+        return new JAXBElement<>(_RemoveBookResponse_QNAME, Object.class, null, value);
     }
 
     /**

@@ -1,8 +1,10 @@
 package com.example.libraries;
 
 import org.example.libraries.LibrariesDb;
+import org.example.AddBookRequest;
 import org.example.GetLibraryDetailsRequest;
 import org.example.GetLibraryListResponse;
+import org.example.RemoveBookRequest;
 import org.example.libraries.LibrariesDbService;
 import org.example.types.Library;
 import org.example.types.LibraryPreview;
@@ -69,6 +71,81 @@ public class LibrariesDbEndpoint implements LibrariesDb {
 		
 		
 		return response;
+	}
+
+
+	@Override
+	public Object addBook(AddBookRequest payload) throws LibrariesDbExceptionMsg {
+		int bookId = payload.getBookId();
+		int libraryId = payload.getLibraryId();
+
+		Library requestedLibrary = null;
+
+		for(Library library : libraries) {
+			if (library.getId() == libraryId) {
+				requestedLibrary = library;
+			}
+		}
+		
+		if(requestedLibrary == null) {
+			throw new LibrariesDbExceptionMsg("library does not exits, id: " + libraryId);
+		}
+		
+		BookRecord foundBookRecord = null;
+		for(BookRecord bookRecord : requestedLibrary.getBooks().getBookRecords()) {
+			if (bookRecord.getId() == bookId) {
+				foundBookRecord = bookRecord;
+			}
+		}
+		
+		if (foundBookRecord == null) {
+			foundBookRecord = new BookRecord();
+			foundBookRecord.setId(bookId);
+			foundBookRecord.setCount(0);
+		}
+		
+		int newCount = foundBookRecord.getCount() + 1;
+		foundBookRecord.setCount(newCount);
+		return null;
+	}
+
+
+	@Override
+	public Object removeBook(RemoveBookRequest payload) throws LibrariesDbExceptionMsg {
+		int bookId = payload.getBookId();
+		int libraryId = payload.getLibraryId();
+
+		Library requestedLibrary = null;
+
+		for(Library library : libraries) {
+			if (library.getId() == libraryId) {
+				requestedLibrary = library;
+			}
+		}
+		
+		if(requestedLibrary == null) {
+			throw new LibrariesDbExceptionMsg("library does not exits, id: " + libraryId);
+		}
+		
+		BookRecord foundBookRecord = null;
+		for(BookRecord bookRecord : requestedLibrary.getBooks().getBookRecords()) {
+			if (bookRecord.getId() == bookId) {
+				foundBookRecord = bookRecord;
+			}
+		}
+		
+		if (foundBookRecord == null) {
+			throw new LibrariesDbExceptionMsg("book with id " + bookId +
+					" not found in library with id " + libraryId);
+		}
+		
+		if (foundBookRecord.getCount() == 0) {
+			throw new LibrariesDbExceptionMsg("we don't have any more copies of book with id " + bookId);
+		}
+		
+		int newCount = foundBookRecord.getCount() - 1;
+		foundBookRecord.setCount(newCount);
+		return null;
 	}
 
 }

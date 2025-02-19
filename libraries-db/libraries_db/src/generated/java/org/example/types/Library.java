@@ -19,7 +19,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *       <sequence>
  *         <element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         <element name="location" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         <element name="books" type="{http://www.example.org/types}BookRecord"/>
+ *         <element name="books" type="{http://www.example.org/types}BookRecordArray"/>
  *         <element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       </sequence>
  *     </restriction>
@@ -99,7 +99,7 @@ public class Library {
      * 
      * @return
      *     possible object is
-     *     {@link BookRecord }
+     *     {@link BookRecordArray }
      *     
      */
     public BookRecordArray getBooks() {
@@ -111,7 +111,7 @@ public class Library {
      * 
      * @param value
      *     allowed object is
-     *     {@link BookRecord }
+     *     {@link BookRecordArray }
      *     
      */
     public void setBooks(BookRecordArray value) {

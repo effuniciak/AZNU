@@ -15,15 +15,28 @@
   <wsdl:message name="getLibraryListRequestMsg">
     <wsdl:part element="libraries:getLibraryListRequest" name="payload"/>
   </wsdl:message>
-    <wsdl:message name="getLibraryListResponseMsg">
+  <wsdl:message name="getLibraryListResponseMsg">
     <wsdl:part element="libraries:getLibraryListResponse" name="payload"/>
   </wsdl:message>
-    <wsdl:message name="getLibraryDetailsRequestMsg">
+  <wsdl:message name="getLibraryDetailsRequestMsg">
     <wsdl:part element="libraries:getLibraryDetailsRequest" name="payload"/>
   </wsdl:message>
-    <wsdl:message name="getLibraryDetailsResponseMsg">
+  <wsdl:message name="getLibraryDetailsResponseMsg">
     <wsdl:part element="libraries:getLibraryDetailsResponse" name="payload"/>
   </wsdl:message>
+  <wsdl:message name="addBookRequestMsg">
+    <wsdl:part element="libraries:addBookRequest" name="payload"/>
+  </wsdl:message>
+  <wsdl:message name="addBookResponseMsg">
+    <wsdl:part element="libraries:addBookResponse" name="payload"/>
+  </wsdl:message>
+  <wsdl:message name="removeBookRequestMsg">
+    <wsdl:part element="libraries:removeBookRequest" name="payload"/>
+  </wsdl:message>
+  <wsdl:message name="removeBookResponseMsg">
+    <wsdl:part element="libraries:removeBookResponse" name="payload"/>
+  </wsdl:message>
+  
 
   <wsdl:message name="LibrariesDbExceptionMsg">
     <wsdl:part element="libraries:librariesDbException" name="payload"/>
@@ -38,6 +51,16 @@
     <wsdl:operation name="getLibraryDetails">
       <wsdl:input message="tns:getLibraryDetailsRequestMsg"/>
       <wsdl:output message="tns:getLibraryDetailsResponseMsg"/>
+      <wsdl:fault message="tns:LibrariesDbExceptionMsg" name="librariesDbException"/>
+    </wsdl:operation>
+    <wsdl:operation name="addBook">
+      <wsdl:input message="tns:addBookRequestMsg"/>
+      <wsdl:output message="tns:addBookResponseMsg"/>
+      <wsdl:fault message="tns:LibrariesDbExceptionMsg" name="librariesDbException"/>
+    </wsdl:operation>
+    <wsdl:operation name="removeBook">
+      <wsdl:input message="tns:removeBookRequestMsg"/>
+      <wsdl:output message="tns:removeBookResponseMsg"/>
       <wsdl:fault message="tns:LibrariesDbExceptionMsg" name="librariesDbException"/>
     </wsdl:operation>
   </wsdl:portType>
@@ -57,6 +80,30 @@
     </wsdl:operation>
     <wsdl:operation name="getLibraryDetails">
       <soap:operation soapAction="http://www.example.org/libraries/getLibraryDetails"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="librariesDbException">
+      	<soap:fault name="librariesDbException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addBook">
+      <soap:operation soapAction="http://www.example.org/libraries/addBook"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="librariesDbException">
+      	<soap:fault name="librariesDbException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeBook">
+      <soap:operation soapAction="http://www.example.org/libraries/removeBook"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>

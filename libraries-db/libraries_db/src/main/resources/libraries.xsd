@@ -15,5 +15,23 @@
 		</complexType>
 	</element>
 	<element name="getLibraryDetailsResponse" type="libraries_t:Library"/>
+	<element name="addBookRequest">
+		<complexType>
+			<sequence>
+				<element name="libraryId" type="int"/>
+				<element name="bookId" type="int"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="addBookResponse"/>
+	<element name="removeBookRequest">
+		<complexType>
+			<sequence>
+				<element name="libraryId" type="int"/>
+				<element name="bookId" type="int"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="removeBookResponse"/>
 	<element name="librariesDbException" type="libraries_t:Exception"/>
 </schema>
