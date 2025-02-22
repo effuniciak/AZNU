@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:tns="http://www.example.org/libraries/" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	name="libraries" 
+	targetNamespace="http://www.example.org/libraries/"
+	xmlns:libraries="http://www.example.org">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/">
+		<xsd:import schemaLocation="libraries.xsd" namespace="http://www.example.org"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getLibraryListRequestMsg">
+    <wsdl:part element="libraries:getLibraryListRequest" name="payload"/>
+  </wsdl:message>
+  <wsdl:message name="getLibraryListResponseMsg">
+    <wsdl:part element="libraries:getLibraryListResponse" name="payload"/>
+  </wsdl:message>
+  <wsdl:message name="getLibraryDetailsRequestMsg">
+    <wsdl:part element="libraries:getLibraryDetailsRequest" name="payload"/>
+  </wsdl:message>
+  <wsdl:message name="getLibraryDetailsResponseMsg">
+    <wsdl:part element="libraries:getLibraryDetailsResponse" name="payload"/>
+  </wsdl:message>
+  <wsdl:message name="addBookRequestMsg">
+    <wsdl:part element="libraries:addBookRequest" name="payload"/>
+  </wsdl:message>
+  <wsdl:message name="addBookResponseMsg">
+    <wsdl:part element="libraries:addBookResponse" name="payload"/>
+  </wsdl:message>
+  <wsdl:message name="removeBookRequestMsg">
+    <wsdl:part element="libraries:removeBookRequest" name="payload"/>
+  </wsdl:message>
+  <wsdl:message name="removeBookResponseMsg">
+    <wsdl:part element="libraries:removeBookResponse" name="payload"/>
+  </wsdl:message>
+  
+
+  <wsdl:message name="LibrariesDbExceptionMsg">
+    <wsdl:part element="libraries:librariesDbException" name="payload"/>
+  </wsdl:message>
+  
+  <wsdl:portType name="LibrariesDb">
+    <wsdl:operation name="getLibraryList">
+      <wsdl:input message="tns:getLibraryListRequestMsg"/>
+      <wsdl:output message="tns:getLibraryListResponseMsg"/>
+      <wsdl:fault message="tns:LibrariesDbExceptionMsg" name="librariesDbException"/>
+    </wsdl:operation>
+    <wsdl:operation name="getLibraryDetails">
+      <wsdl:input message="tns:getLibraryDetailsRequestMsg"/>
+      <wsdl:output message="tns:getLibraryDetailsResponseMsg"/>
+      <wsdl:fault message="tns:LibrariesDbExceptionMsg" name="librariesDbException"/>
+    </wsdl:operation>
+    <wsdl:operation name="addBook">
+      <wsdl:input message="tns:addBookRequestMsg"/>
+      <wsdl:output message="tns:addBookResponseMsg"/>
+      <wsdl:fault message="tns:LibrariesDbExceptionMsg" name="librariesDbException"/>
+    </wsdl:operation>
+    <wsdl:operation name="removeBook">
+      <wsdl:input message="tns:removeBookRequestMsg"/>
+      <wsdl:output message="tns:removeBookResponseMsg"/>
+      <wsdl:fault message="tns:LibrariesDbExceptionMsg" name="librariesDbException"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="LibrariesDbSOAP" type="tns:LibrariesDb">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getLibraryList">
+      <soap:operation soapAction="http://www.example.org/libraries/getLibraryList"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="librariesDbException">
+      	<soap:fault name="librariesDbException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getLibraryDetails">
+      <soap:operation soapAction="http://www.example.org/libraries/getLibraryDetails"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="librariesDbException">
+      	<soap:fault name="librariesDbException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addBook">
+      <soap:operation soapAction="http://www.example.org/libraries/addBook"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="librariesDbException">
+      	<soap:fault name="librariesDbException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeBook">
+      <soap:operation soapAction="http://www.example.org/libraries/removeBook"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="librariesDbException">
+      	<soap:fault name="librariesDbException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LibrariesDbService">
+    <wsdl:port binding="tns:LibrariesDbSOAP" name="LibrariesDbPort">
+      <soap:address location="http://www.example.org/libraries/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,42 @@
+package com.example.books;
+
+import org.example.AddNewBookRequest;
+import org.example.AddNewBookResponse;
+import org.example.GetBookRequest;
+import org.example.books.LibraryManager;
+import org.example.books.LibraryManagerExceptionMsg;
+import org.example.types.Book;
+
+import java.util.ArrayList;
+
+@org.springframework.stereotype.Service
+public class LibraryManagerEndpoint implements LibraryManager {
+	
+	private static Book[] books;
+
+	@Override
+	public AddNewBookResponse addNewBook(AddNewBookRequest payload) throws LibraryManagerExceptionMsg {
+		Book book = payload.getRecord();
+		
+		if (book == null) {
+			org.example.types.Exception exc = new org.example.types.Exception();
+			exc.setCode(500);
+			exc.setText("record cannot be null");
+			
+			LibraryManagerExceptionMsg excMsg = new LibraryManagerExceptionMsg("malformed request", exc);
+			
+			throw excMsg;
+		}
+		
+		books.
+		
+		return null;
+	}
+
+	@Override
+	public Book getBook(GetBookRequest payload) throws LibraryManagerExceptionMsg {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

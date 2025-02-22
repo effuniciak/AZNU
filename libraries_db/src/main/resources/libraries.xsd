@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:libraries_t="http://www.example.org/types" targetNamespace="http://www.example.org" xmlns:tns="http://www.example.org" elementFormDefault="qualified">
+	<import schemaLocation="types.xsd" namespace="http://www.example.org/types"/>
+	<element name="getLibraryListRequest"/>
+	<element name="getLibraryListResponse">
+		<complexType>
+		  	<sequence>
+		  		<element name="libraries" type="libraries_t:LibraryPreview" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+		  	</sequence>
+		</complexType>
+	</element>
+	<element name="getLibraryDetailsRequest">
+		<complexType>
+			<attribute name="id" type="int" />
+		</complexType>
+	</element>
+	<element name="getLibraryDetailsResponse" type="libraries_t:Library"/>
+	<element name="addBookRequest">
+		<complexType>
+			<sequence>
+				<element name="libraryId" type="int"/>
+				<element name="bookId" type="int"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="addBookResponse"/>
+	<element name="removeBookRequest">
+		<complexType>
+			<sequence>
+				<element name="libraryId" type="int"/>
+				<element name="bookId" type="int"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="removeBookResponse"/>
+	<element name="librariesDbException" type="libraries_t:Exception"/>
+</schema>

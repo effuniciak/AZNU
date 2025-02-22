@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://books.example.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns3="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://www.example.org/books/" name="LibraryManagerEndpointService" targetNamespace="http://books.example.com/">
+  <wsdl:import location="http://localhost:8080/soap-api/service/books?wsdl=LibraryManager.wsdl" namespace="http://www.example.org/books/">
+    </wsdl:import>
+  <wsdl:binding name="LibraryManagerEndpointServiceSoapBinding" type="ns1:LibraryManager">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="addNewBook">
+      <soap:operation soapAction="http://www.example.org/books/addNewBook" style="document"/>
+      <wsdl:input name="addNewBook">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addNewBookResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryManagerExceptionMsg">
+        <soap:fault name="LibraryManagerExceptionMsg" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBook">
+      <soap:operation soapAction="http://www.example.org/books/getBook" style="document"/>
+      <wsdl:input name="getBook">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getBookResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryManagerExceptionMsg">
+        <soap:fault name="LibraryManagerExceptionMsg" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBooks">
+      <soap:operation soapAction="http://www.example.org/books/getBooks" style="document"/>
+      <wsdl:input name="getBooks">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getBooksResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryManagerExceptionMsg">
+        <soap:fault name="LibraryManagerExceptionMsg" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LibraryManagerEndpointService">
+    <wsdl:port binding="tns:LibraryManagerEndpointServiceSoapBinding" name="LibraryManagerEndpointPort">
+      <soap:address location="http://localhost:8080/soap-api/service/books"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
