@@ -6,6 +6,7 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
 import org.example.types.Exception;
+import org.example.GetLibraryListRequest;
 import org.example.types.Library;
 
 
@@ -136,4 +137,11 @@ public class ObjectFactory {
         return new JAXBElement<Object>(_RemoveBookResponse_QNAME, Object.class, null, value);
     }
 
+    /**
+     * Create an instance of {@link GetLibraryListRequest }
+     * 
+     */
+    public GetLibraryListRequest createGetLibraryListRequest() {
+        return new GetLibraryListRequest();
+    }
 }
