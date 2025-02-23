@@ -162,19 +162,21 @@ public class LibraryClientService extends RouteBuilder {
 			
 			
 			
-			int bookNr = 0;
-			for (BookRecord bookRecord : response.getBooks().getBookRecords()) {
+			for (int bookNr = 0; bookNr < response.getBooks().getBookRecords().size(); bookNr++) {
+				BookRecord bookRecord = response.getBooks().getBookRecords().get(bookNr);
+				
+				Book foundBook = allBooks.get(bookRecord.getId());
+				
 				for (int i = 0; i < bookRecord.getCount(); i++) {
-
 					
-					response.getFullBookList().add(allBooks.get(bookNr));
+					
+					response.getFullBookList().add(foundBook);
 				}
 				
-				bookNr++;
 			}
 		
 			
-			exchange.getMessage().setBody(gson.toJson(response, Library.class));
+			exchange.getMessage().setBody(gson.toJson(response, FullLibraryDetailsResponse.class));
 			
 		})
 		
