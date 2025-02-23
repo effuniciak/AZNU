@@ -30,6 +30,32 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Book }
+     * 
+     */
+    public Book createBook() {
+        return new Book();
+    }
+
+    /**
+     * Create an instance of {@link Author }
+     * 
+     */
+    public Author createAuthor() {
+        return new Author();
+    }
+
+    /**
+     * Create an instance of {@link Exception }
+     * 
+     */
+    public Exception createException() {
+        return new Exception();
+    }
+
+    
+
+    /**
      * Create an instance of {@link Library }
      * 
      */
@@ -53,13 +79,7 @@ public class ObjectFactory {
         return new BookRecord();
     }
 
-    /**
-     * Create an instance of {@link Exception }
-     * 
-     */
-    public Exception createException() {
-        return new Exception();
-    }
+
 
     /**
      * Create an instance of {@link LibraryPreview }
@@ -68,7 +88,5 @@ public class ObjectFactory {
     public LibraryPreview createLibraryPreview() {
         return new LibraryPreview();
     }
-
-
 
 }

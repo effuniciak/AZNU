@@ -7,9 +7,14 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.SagaPropagation;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.model.rest.RestBindingMode;
+import org.example.FullLibraryDetailsResponse;
+import org.example.GetBooksRequest;
+import org.example.GetBooksResponse;
 import org.example.GetLibraryDetailsRequest;
 import org.example.GetLibraryListRequest;
 import org.example.GetLibraryListResponse;
+import org.example.types.Book;
+import org.example.types.BookRecord;
 import org.example.types.Library;
 import org.example.types.LibraryPreview;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
@@ -78,6 +83,13 @@ public class LibraryClientService extends RouteBuilder {
 		final JaxbDataFormat jaxbLibraryListRequest = new
 				//JaxbDataFormat(com.example.library_client.service.GetLibraryListRequest.class.getPackage().getName());
 				JaxbDataFormat(org.example.GetLibraryListRequest.class.getPackage().getName());
+		
+		final JaxbDataFormat jaxbGetBooksRequest = new
+				JaxbDataFormat(org.example.GetBooksRequest.class.getPackage().getName());
+				
+		
+		final JaxbDataFormat jaxbGetBooksResponse = new
+				JaxbDataFormat(org.example.GetBooksResponse.class.getPackage().getName());
 				
 		
 		from("direct:libraryList").routeId("getLibraryList").log("getting library list")
@@ -118,9 +130,54 @@ public class LibraryClientService extends RouteBuilder {
 		.marshal(jaxbLibraryDetailsRequest)
 		.to("spring-ws:http://localhost:8081/soap-api/service/libraries")
 		.unmarshal(jaxbLibraryDetailsResponse)
-		.process((exchange) -> {
-			exchange.getMessage().setBody(gson.toJson(exchange.getMessage().getBody(), Library.class));
+		.process((exchange) -> {			
+			Library libraryDetails = (Library)exchange.getMessage().getBody();
+
+			FullLibraryDetailsResponse response = new FullLibraryDetailsResponse();
+			
+			response.setId(libraryDetails.getId());
+			response.setLocation(libraryDetails.getLocation());
+			response.setName(libraryDetails.getName());
+			response.setBooks(libraryDetails.getBooks());
+			
+			exchange.setProperty("fullDetailsResponse", response);
+			
+			
+			GetBooksRequest request = new GetBooksRequest();
+			
+			exchange.getMessage().setBody(request);
+			
+			//exchange.getMessage().setBody(gson.toJson(exchange.getMessage().getBody(), Library.class));
 		})
+		.marshal(jaxbGetBooksRequest).
+		to("spring-ws:http://localhost:8080/soap-api/service/books")
+		.unmarshal(jaxbGetBooksResponse)
+		
+		.process((exchange) -> {
+			FullLibraryDetailsResponse response = (FullLibraryDetailsResponse)exchange.getProperty("fullDetailsResponse");
+			
+			GetBooksResponse getBooksResponse = (GetBooksResponse)exchange.getMessage().getBody();
+			
+			List<Book> allBooks = getBooksResponse.getBook();
+			
+			
+			
+			int bookNr = 0;
+			for (BookRecord bookRecord : response.getBooks().getBookRecords()) {
+				for (int i = 0; i < bookRecord.getCount(); i++) {
+
+					
+					response.getFullBookList().add(allBooks.get(bookNr));
+				}
+				
+				bookNr++;
+			}
+		
+			
+			exchange.getMessage().setBody(gson.toJson(response, Library.class));
+			
+		})
+		
 		;
 
 

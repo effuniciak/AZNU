@@ -175,7 +175,6 @@
 				<wsdlOptions>
 				<wsdlOption>
 				<wsdl>${basedir}/src/main/resources/books.wsdl</wsdl>
-				<wsdl>${basedir}/src/main/resources/libraries.wsdl</wsdl>
 				</wsdlOption>
 				</wsdlOptions>
 				</configuration>

@@ -6,7 +6,9 @@ import org.example.GetBookRequest;
 import org.example.GetBooksResponse;
 import org.example.books.LibraryManager;
 import org.example.books.LibraryManagerExceptionMsg;
+import org.example.types.Author;
 import org.example.types.Book;
+import org.example.types.Category;
 
 import java.util.ArrayList;
 
@@ -14,6 +16,23 @@ import java.util.ArrayList;
 public class LibraryManagerEndpoint implements LibraryManager {
 	
 	private static ArrayList<Book> books = new ArrayList<Book>();
+	
+	LibraryManagerEndpoint() {
+		Book book1 = new Book();
+		
+		Author author1 = new Author();
+		
+		author1.setId(0);
+		author1.setName("Janusz Zajdel");
+		author1.setUrl("https://lubimyczytac.pl/autor/3293/janusz-a-zajdel");
+		
+		book1.setAuthor(author1);
+		book1.setCategory(Category.fromValue("fantasy"));
+		book1.setPublicationYear(null);
+		book1.setTitle("Wyjście z cienia");
+		this.books.add(book1);
+		
+	}
 
 	@Override
 	public AddNewBookResponse addNewBook(AddNewBookRequest payload) throws LibraryManagerExceptionMsg {
