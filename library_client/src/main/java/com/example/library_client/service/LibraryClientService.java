@@ -7,6 +7,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.SagaPropagation;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.model.rest.RestBindingMode;
+import org.example.GetLibraryDetailsRequest;
 import org.example.GetLibraryListRequest;
 import org.example.GetLibraryListResponse;
 import org.example.types.Library;
@@ -49,7 +50,8 @@ public class LibraryClientService extends RouteBuilder {
 		 .param().name("body").type(body).description("Library").endParam()
 		 .responseMessage().code(200).message("Book borrowed!").endResponseMessage()
 		 .to("direct:borrowBook")
-		 .get("/libraryList").outType(LibraryListResponse.class).to("direct:libraryList");
+		 .get("/libraryList").outType(LibraryListResponse.class).to("direct:libraryList")
+		.post("/libraryDetails").type(GetLibraryDetailsRequest.class).outType(Library.class).to("direct:libraryDetails");
 		
 		Library testLibrary = new Library();
 		
@@ -65,6 +67,13 @@ public class LibraryClientService extends RouteBuilder {
 		
 		final JaxbDataFormat jaxbLibrary = new
 				JaxbDataFormat(org.example.types.Library.class.getPackage().getName());
+		
+		final JaxbDataFormat jaxbLibraryDetailsRequest = new
+				JaxbDataFormat(org.example.GetLibraryDetailsRequest.class.getPackage().getName());
+		
+		final JaxbDataFormat jaxbLibraryDetailsResponse = new
+				JaxbDataFormat(org.example.GetLibraryDetailsResponse.class.getPackage().getName());
+		
 		
 		final JaxbDataFormat jaxbLibraryListRequest = new
 				//JaxbDataFormat(com.example.library_client.service.GetLibraryListRequest.class.getPackage().getName());
@@ -101,6 +110,19 @@ public class LibraryClientService extends RouteBuilder {
 			exchange.getMessage().setBody(gson.toJson(exchange.getMessage().getBody(), GetLibraryListResponse.class));
 		})
 		;
+		
+		
+		
+		
+		from("direct:libraryDetails").routeId("getLibraryDetails").log("getting library details")
+		.marshal(jaxbLibraryDetailsRequest)
+		.to("spring-ws:http://localhost:8081/soap-api/service/libraries")
+		.unmarshal(jaxbLibraryDetailsResponse)
+		.process((exchange) -> {
+			exchange.getMessage().setBody(gson.toJson(exchange.getMessage().getBody(), Library.class));
+		})
+		;
+
 
 		
 		

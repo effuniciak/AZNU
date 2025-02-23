@@ -29,6 +29,18 @@ public class LibraryManagerEndpoint implements LibraryManager {
 			throw excMsg;
 		}
 		
+		
+		for (Book _book : books) {
+			if (_book.getTitle().equals(book.getTitle())) {
+				AddNewBookResponse response = new AddNewBookResponse();
+				
+				response.setId(books.indexOf(_book));
+				
+				return response;
+			}
+		}
+		
+
 		books.add(book);
 		
 		AddNewBookResponse response = new AddNewBookResponse();
