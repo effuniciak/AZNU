@@ -102,6 +102,8 @@ public class LibrariesDbEndpoint implements LibrariesDb {
 			foundBookRecord = new BookRecord();
 			foundBookRecord.setId(bookId);
 			foundBookRecord.setCount(0);
+			
+			requestedLibrary.getBooks().getBookRecords().add(foundBookRecord);
 		}
 		
 		int newCount = foundBookRecord.getCount() + 1;

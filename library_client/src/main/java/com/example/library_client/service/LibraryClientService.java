@@ -7,6 +7,11 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.SagaPropagation;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.model.rest.RestBindingMode;
+import org.example.AddBookRequest;
+import org.example.AddBookToLibraryRequest;
+import org.example.AddBookToLibraryResponse;
+import org.example.AddNewBookRequest;
+import org.example.AddNewBookResponse;
 import org.example.FullLibraryDetailsResponse;
 import org.example.GetBooksRequest;
 import org.example.GetBooksResponse;
@@ -56,7 +61,9 @@ public class LibraryClientService extends RouteBuilder {
 		 .responseMessage().code(200).message("Book borrowed!").endResponseMessage()
 		 .to("direct:borrowBook")
 		 .get("/libraryList").outType(LibraryListResponse.class).to("direct:libraryList")
-		.post("/libraryDetails").type(GetLibraryDetailsRequest.class).outType(Library.class).to("direct:libraryDetails");
+		.post("/libraryDetails").type(GetLibraryDetailsRequest.class).outType(Library.class).to("direct:libraryDetails")
+		.post("/addBookToLibrary").type(AddBookToLibraryRequest.class)
+				.outType(AddBookToLibraryResponse.class).to("direct:addBookToLibrary");
 		
 		Library testLibrary = new Library();
 		
@@ -90,6 +97,15 @@ public class LibraryClientService extends RouteBuilder {
 		
 		final JaxbDataFormat jaxbGetBooksResponse = new
 				JaxbDataFormat(org.example.GetBooksResponse.class.getPackage().getName());
+		
+		final JaxbDataFormat jaxbAddNewBookRequest = new
+				JaxbDataFormat(org.example.AddNewBookRequest.class.getPackage().getName());
+		
+		final JaxbDataFormat jaxbAddNewBookResponse = new
+				JaxbDataFormat(org.example.AddNewBookResponse.class.getPackage().getName());
+		
+		final JaxbDataFormat jaxbAddBookToLibraryRequest = new
+				JaxbDataFormat(org.example.AddBookRequest.class.getPackage().getName());
 				
 		
 		from("direct:libraryList").routeId("getLibraryList").log("getting library list")
@@ -152,7 +168,7 @@ public class LibraryClientService extends RouteBuilder {
 		.marshal(jaxbGetBooksRequest).
 		to("spring-ws:http://localhost:8080/soap-api/service/books")
 		.unmarshal(jaxbGetBooksResponse)
-		
+	
 		.process((exchange) -> {
 			FullLibraryDetailsResponse response = (FullLibraryDetailsResponse)exchange.getProperty("fullDetailsResponse");
 			
@@ -178,9 +194,54 @@ public class LibraryClientService extends RouteBuilder {
 			
 			exchange.getMessage().setBody(gson.toJson(response, FullLibraryDetailsResponse.class));
 			
-		})
+		});
 		
-		;
+		
+		
+		
+		
+		
+		
+		from("direct:addBookToLibrary").routeId("addBookToLibrary").log("adding book to library")
+		.process((exchange) -> {
+			AddBookToLibraryRequest request = (AddBookToLibraryRequest)exchange.getMessage().getBody();
+			
+			Book bookData = request.bookDetails;
+			
+			exchange.setProperty("AddBookToLibraryRequest", request);
+			
+			AddNewBookRequest addBookToManagerRequest = new AddNewBookRequest();
+			
+			addBookToManagerRequest.setRecord(bookData);
+			
+			exchange.getMessage().setBody(addBookToManagerRequest);
+		})
+		.marshal(jaxbAddNewBookRequest)
+		.to("spring-ws:http://localhost:8080/soap-api/service/books")
+		.unmarshal(jaxbAddNewBookResponse)
+		.process((exchange) -> {
+			AddNewBookResponse response = (AddNewBookResponse)exchange.getMessage().getBody();
+			
+			int bookId = response.getId();
+			
+			AddBookToLibraryRequest addBookRequest = (AddBookToLibraryRequest)exchange.getProperty("AddBookToLibraryRequest");
+		
+			int libraryId = addBookRequest.libraryId;
+			
+			AddBookRequest addBookToLibraryRequest = new AddBookRequest();
+			
+			addBookToLibraryRequest.setBookId(bookId);
+			addBookToLibraryRequest.setLibraryId(libraryId);
+			
+			exchange.getMessage().setBody(addBookToLibraryRequest);
+		})
+		.marshal(jaxbAddBookToLibraryRequest)
+		.to("spring-ws:http://localhost:8081/soap-api/service/libraries")
+		.process((exchange) -> {
+			AddNewBookResponse response = new AddNewBookResponse();
+			
+			exchange.getMessage().setBody(gson.toJson(response, AddNewBookResponse.class));
+		});
 
 
 		
