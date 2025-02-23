@@ -35,8 +35,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Book", propOrder = {
     "title",
     "author",
-    "category",
-    "publicationYear"
+    "category"
 })
 public class Book {
 
@@ -46,9 +45,6 @@ public class Book {
     protected Author author;
     @XmlElement(required = true)
     protected String category;
-    @XmlElement(name = "publication_year", required = true)
-    @XmlSchemaType(name = "date")
-    protected XMLGregorianCalendar publicationYear;
 
     /**
      * Gets the value of the title property.
@@ -122,28 +118,5 @@ public class Book {
         this.category = value;
     }
 
-    /**
-     * Gets the value of the publicationYear property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
-     */
-    public XMLGregorianCalendar getPublicationYear() {
-        return publicationYear;
-    }
-
-    /**
-     * Sets the value of the publicationYear property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
-     */
-    public void setPublicationYear(XMLGregorianCalendar value) {
-        this.publicationYear = value;
-    }
 
 }

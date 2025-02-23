@@ -56,10 +56,6 @@ public class LibraryClientService extends RouteBuilder {
 		rest("/library_client").description("Library management REST service")
 		 .consumes("application/json")
 		 .produces("application/json")
-		 .post("/borrowBook").description("Borrow book from certain library").type(BorrowBookRequest.class).outType(Library.class)
-		 .param().name("body").type(body).description("Library").endParam()
-		 .responseMessage().code(200).message("Book borrowed!").endResponseMessage()
-		 .to("direct:borrowBook")
 		 .get("/libraryList").outType(LibraryListResponse.class).to("direct:libraryList")
 		.post("/libraryDetails").type(GetLibraryDetailsRequest.class).outType(Library.class).to("direct:libraryDetails")
 		.post("/addBookToLibrary").type(AddBookToLibraryRequest.class)
@@ -243,16 +239,6 @@ public class LibraryClientService extends RouteBuilder {
 			exchange.getMessage().setBody(gson.toJson(response, AddNewBookResponse.class));
 		});
 
-
-		
-		
-        rest("")
-        .get("/hello")
-        .to("direct:helloRoute");
-
-        from("direct:helloRoute")
-        .setBody(constant("Hello, World from Apache Camel!"))
-        .log("Processed REST request to /api/hello");
         
 
 	}
