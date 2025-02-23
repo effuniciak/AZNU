@@ -35,11 +35,51 @@ public class LibrariesDbEndpoint implements LibrariesDb {
 		books1.getBookRecords().add(book2);
 		
 		l1.setId(0);
-		l1.setLocation("ulica uliczna 19/1");
+		l1.setLocation("ulica Uliczna 19/1");
 		l1.setName("Biblioteka 1");
 		l1.setBooks(books1);
 		
 		libraries.add(l1);
+		
+		Library l2 = new Library();
+		BookRecordArray books2 = new BookRecordArray();
+		
+		BookRecord book3 = new BookRecord();
+		book3.setId(6);
+		book3.setCount(3);
+		books2.getBookRecords().add(book3);
+		
+		BookRecord book4 = new BookRecord();
+		book4.setId(5);
+		book4.setCount(3);
+		books2.getBookRecords().add(book4);
+		
+		l2.setId(1);
+		l2.setLocation("ulica Bolesława Chrobrego 20/2");
+		l2.setName("Biblioteka 2");
+		l2.setBooks(books2);
+		
+		libraries.add(l2);
+		
+		Library l3 = new Library();
+		BookRecordArray books3 = new BookRecordArray();
+		
+		BookRecord book5 = new BookRecord();
+		book5.setId(7);
+		book5.setCount(2);
+		books3.getBookRecords().add(book5);
+		
+		BookRecord book6 = new BookRecord();
+		book6.setId(4);
+		book6.setCount(2);
+		books3.getBookRecords().add(book6);
+		
+		l3.setId(2);
+		l3.setLocation("ulica Kosmonautów 6A/106");
+		l3.setName("Biblioteka 3");
+		l3.setBooks(books3);
+		
+		libraries.add(l3);
 	}
 	
 

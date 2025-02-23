@@ -164,7 +164,6 @@ public class LibraryClientService extends RouteBuilder {
 		.marshal(jaxbGetBooksRequest).
 		to("spring-ws:http://localhost:8080/soap-api/service/books")
 		.unmarshal(jaxbGetBooksResponse)
-	
 		.process((exchange) -> {
 			FullLibraryDetailsResponse response = (FullLibraryDetailsResponse)exchange.getProperty("fullDetailsResponse");
 			
@@ -234,9 +233,10 @@ public class LibraryClientService extends RouteBuilder {
 		.marshal(jaxbAddBookToLibraryRequest)
 		.to("spring-ws:http://localhost:8081/soap-api/service/libraries")
 		.process((exchange) -> {
-			AddNewBookResponse response = new AddNewBookResponse();
+			AddBookToLibraryResponse response = new AddBookToLibraryResponse();
+		
 			
-			exchange.getMessage().setBody(gson.toJson(response, AddNewBookResponse.class));
+			exchange.getMessage().setBody(gson.toJson(response, AddBookToLibraryResponse.class));
 		});
 
         
